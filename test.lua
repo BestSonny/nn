@@ -3729,6 +3729,18 @@ function nntest.Reshape()
       "Error in minibatch nElement")
 end
 
+function nntest.TransposeX()
+   local input = torch.randn(10,4, 1, 10)
+   local m = nn.Sequential()
+   m:add(nn.SplitTable(1))
+   m:add(nn.TransposeX())
+   output = m:forward(input)
+   for i, k in ipairs(output) do
+     xx = input[i]:resize(4,10)
+     mytester:assertTensorEq(xx,k:t(),0.0000001,"TransposeX output float err")
+   end
+end
+
 -- Define a test for SpatialUpSamplingCuda
 function nntest.SpatialUpSamplingNearest()
   local scale = torch.random(2,4)
