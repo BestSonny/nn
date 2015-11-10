@@ -17,6 +17,18 @@ function TransposeX:updateOutput(input)
 end
 
 function TransposeX:updateGradInput(input, gradOutput)
-   self.gradInput:viewAs(gradOutput, input)
+   gradOutput = threeDtable2tensor(gradOutput)
+   self.gradInput:resizeAs(gradOutput):copy(gradOutput)
    return self.gradInput
+end
+
+function threeDtable2tensor(tab)
+		local batch = #tab
+    local length = tab[1]:size()[1]
+    local feature = tab[1]:size()[2]
+		local tensor = torch.Tensor(batch,feature,length):fill(0)
+    for key,val in ipairs(tab) do
+      tensor[key] = val:t()
+    end
+		return tensor:resize(batch,1,feature,length)
 end

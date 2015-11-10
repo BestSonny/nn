@@ -3739,6 +3739,11 @@ function nntest.TransposeX()
      xx = input[i]:resize(4,10)
      mytester:assertTensorEq(xx,k:t(),0.0000001,"TransposeX output float err")
    end
+   local back = m:backward(input,output)
+   for i=1,back:size()[1] do
+     xx = back[i]:resize(4,10):t()
+     mytester:assertTensorEq(xx,output[i],0.0000001,"TransposeX backward float err")
+   end
 end
 
 -- Define a test for SpatialUpSamplingCuda

@@ -77,6 +77,7 @@ end
 
 function Linear:accGradParameters(input, gradOutput, scale)
    scale = scale or 1
+
    if input:dim() == 1 then
       self.gradWeight:addr(scale, gradOutput, input)
       self.gradBias:add(scale, gradOutput)

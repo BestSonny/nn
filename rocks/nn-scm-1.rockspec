@@ -2,7 +2,7 @@ package = "nn"
 version = "scm-1"
 
 source = {
-   url = "/home/panhe/nn",
+   url = "../nn",
 }
 
 description = {
